@@ -6,10 +6,10 @@ variable "cluster_name" {
   default = "jenkins-eks"
 }
 
-variable "ami_id" {
-  description = "Ubuntu AMI ID"
-}
+# variable "ami_id" {
+#   description = "Ubuntu AMI ID"
+# }
 
-variable "key_name" {
-  description = "EC2 Key Pair"
-}
+# variable "key_name" {
+#   description = "EC2 Key Pair"
+# }

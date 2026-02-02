@@ -12,18 +12,18 @@ module "vpc" {
   public_subnets  = ["10.0.101.0/24", "10.0.102.0/24"]
 
   enable_nat_gateway = true
-  single_nat_gateway  = false
+  single_nat_gateway  = true
   
   enable_dns_hostnames = true
   enable_dns_support   = true
 
   public_subnet_tags = {
-    "kubernetes.io/cluster/eks-app-cluster" = "shared"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/elb"               = "1"
   }
 
   private_subnet_tags = {
-    "kubernetes.io/cluster/eks-app-cluster" = "shared"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/internal-elb"       = "1"
   }
 
@@ -38,21 +38,21 @@ module "eks-cluster-application" {
   source  = "terraform-aws-modules/eks/aws"
   version = "21.15.1"
   
-  cluster_name = var.cluster_name
-  
+  name = var.cluster_name
+  kubernetes_version = "1.29"
   
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
   enable_irsa = true
 
-  cluster_endpoint_public_access = true
+  endpoint_public_access = true
 
-  cluster_addons = {
+  addons = {
     coredns    = { most_recent = true }
     kube-proxy = { most_recent = true }
     vpc-cni    = { most_recent = true }
-  }
+    }
 
   eks_managed_node_groups = {
 
@@ -68,8 +68,5 @@ module "eks-cluster-application" {
   tags = {
     Terraform = "true"
   }
-
-
-
 
 }
