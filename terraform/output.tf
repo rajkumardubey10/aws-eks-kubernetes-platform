@@ -47,11 +47,3 @@ output "oidc_provider_arn" {
   value       = module.eks-cluster-application.oidc_provider_arn
 }
 
-########################
-# Node Group Outputs
-########################
-
-output "node_group_iam_role_arn" {
-  description = "IAM Role ARN for worker nodes"
-  value       = module.eks-cluster-application.eks_managed_node_groups["default"].iam_role_arn
-}
