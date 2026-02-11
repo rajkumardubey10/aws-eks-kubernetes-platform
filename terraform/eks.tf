@@ -59,15 +59,7 @@ module "eks-cluster-application" {
     enabled = true
     node_pools = ["general-purpose"]
   }
-
-
-  # addons = {
-  #   # coredns    = { most_recent = true }
-  #   kube-proxy = { most_recent = true }
-  #   vpc-cni    = { most_recent = true }
-  #   }
-
-
+  
   tags = {
     Terraform = "true"
   }
