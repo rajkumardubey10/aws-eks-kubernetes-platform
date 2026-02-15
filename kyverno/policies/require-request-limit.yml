@@ -1,0 +1,91 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name:  require-request-limit
+spec:
+  validationFailureAction: Audit 
+  background: true
+  rules:
+
+    - name:  min-require-request-limit-for-Deployments-and-StatefulSet
+      match:
+        any:
+          - resources:
+              kinds:
+                - Deployment
+                - StatefulSet
+               
+      validate:
+        message: "Resource must have the Request and Limit in Manifest File"
+        foreach:
+          - list: "spec.template.spec.containers"
+            preconditions:
+              all:
+              - key: "{{ element.resources.requests.cpu }}"
+                operator: NotEquals
+                value: null
+              - key: "{{ element.resources.requests.memory }}"
+                operator: NotEquals
+                value: null
+              - key: "{{ element.resources.limits.cpu }}"
+                operator: NotEquals
+                value: null
+              - key: "{{ element.resources.limits.memory }}"
+                operator: NotEquals
+                value: null
+            deny:
+              conditions:
+                any:
+                - key: "{{ element.resources.requests.cpu }}"
+                  operator: LessThan
+                  value: "200m"
+                - key: "{{ element.resources.requests.memory }}"
+                  operator: LessThan
+                  value: "256Mi"
+                - key: "{{ element.resources.limits.cpu }}"
+                  operator: LessThan
+                  value: "500m"
+                - key: "{{ element.resources.limits.memory }}"
+                  operator: LessThan
+                  value: "512Mi"
+
+    - name:  min-require-request-limit-for-Pods
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+               
+      validate:
+        message: "Resource must have the Request and Limit in Manifest File"
+        foreach:
+          - list: "spec.containers"
+            preconditions:
+              all:
+              - key: "{{ element.resources.requests.cpu }}"
+                operator: NotEquals
+                value: null
+              - key: "{{ element.resources.requests.memory }}"
+                operator: NotEquals
+                value: null
+              - key: "{{ element.resources.limits.cpu }}"
+                operator: NotEquals
+                value: null
+              - key: "{{ element.resources.limits.memory }}"
+                operator: NotEquals
+                value: null
+            deny:
+              conditions:
+                any:
+                - key: "{{ element.resources.requests.cpu }}"
+                  operator: LessThan
+                  value: "200m"
+                - key: "{{ element.resources.requests.memory }}"
+                  operator: LessThan
+                  value: "256Mi"
+                - key: "{{ element.resources.limits.cpu }}"
+                  operator: LessThan
+                  value: "500m"
+                - key: "{{ element.resources.limits.memory }}"
+                  operator: LessThan
+                  value: "512Mi"

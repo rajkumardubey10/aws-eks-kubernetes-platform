@@ -1,0 +1,27 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name:  require-request-limit
+spec:
+  validationFailureAction: Audit 
+  background: true
+  rules:
+
+    - name:  replicas-for-high-avaliablity
+      match:
+        any:
+          - resources:
+              kinds:
+                - Deployment
+                - StatefulSet
+
+      validate:
+        message: "every deployment and StatefulSet must have the replicas >=2 for high avaliablity"
+        deny:
+          conditions:
+            any:
+            - key: "{{ request.object.spec.replicas }}"
+              operator: LessThan
+              value: 2
+
+

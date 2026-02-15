@@ -1,0 +1,84 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: disallow-latest-image-tag
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+
+  # PODS
+  - name: pod-require-image-tag
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+    validate:
+      message: "An image tag is required (image:tag)."
+      foreach:
+      - list: "spec.containers"
+        validate:
+          pattern:
+            image: "*:*"
+      - list: "spec.initContainers"
+        validate:
+          pattern:
+            image: "*:*"
+
+  - name: pod-disallow-latest-tag
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+    validate:
+      message: "Using the 'latest' image tag is not allowed."
+      foreach:
+      - list: "spec.containers"
+        validate:
+          pattern:
+            image: "!*:latest"
+      - list: "spec.initContainers"
+        validate:
+          pattern:
+            image: "!*:latest"
+
+  # DEPLOYMENTS & STATEFULSETS
+  - name: workload-require-image-tag
+    match:
+      any:
+      - resources:
+          kinds:
+          - Deployment
+          - StatefulSet
+    validate:
+      message: "An image tag is required (image:tag)."
+      foreach:
+      - list: "spec.template.spec.containers"
+        validate:
+          pattern:
+            image: "*:*"
+      - list: "spec.template.spec.initContainers"
+        validate:
+          pattern:
+            image: "*:*"
+
+  - name: workload-disallow-latest-tag
+    match:
+      any:
+      - resources:
+          kinds:
+          - Deployment
+          - StatefulSet
+    validate:
+      message: "Using the 'latest' image tag is not allowed."
+      foreach:
+      - list: "spec.template.spec.containers"
+        validate:
+          pattern:
+            image: "!*:latest"
+      - list: "spec.template.spec.initContainers"
+        validate:
+          pattern:
+            image: "!*:latest"
