@@ -1,0 +1,19 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: statefulset-require-persistence
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+  - name: require-volumeclaimtemplates
+    match:
+      any:
+      - resources:
+          kinds:
+          - StatefulSet
+    validate:
+      message: "StatefulSets must define volumeClaimTemplates to ensure data persistence."
+      pattern:
+        spec:
+          volumeClaimTemplates: "?*"
