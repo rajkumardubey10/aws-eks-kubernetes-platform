@@ -1,311 +1,300 @@
 # 🚀 Production-Grade Jenkins CI/CD Platform on AWS EKS
 
----
+A **real-world, production-ready DevOps platform** demonstrating end-to-end infrastructure provisioning, CI/CD automation, Kubernetes security, and observability using **AWS, Terraform, Jenkins, Kubernetes, Prometheus, and Grafana**.
 
-## 1️⃣ Project Overview
-
-This repository showcases a **production-ready DevOps platform** built and delivered in a **freelance consulting style**.  
-The project demonstrates **end-to-end ownership** of infrastructure, CI/CD, Kubernetes security, governance, and observability on **AWS EKS**.
-
-The solution is designed to meet **real client requirements**, including:
-- High availability
-- Security by default
-- Controlled resource usage
-- Zero-trust networking
-- Full monitoring and visibility
+This project is designed and documented in a **freelancing delivery style**, reflecting how enterprise and startup clients expect DevOps platforms to be built, secured, and operated.
 
 ---
 
-## 2️⃣ Architecture Overview
+## 📌 Project Objectives
 
-**High-level flow:**
+The primary objectives of this project are:
 
-1. Infrastructure provisioned using **Terraform**
-2. Amazon EKS cluster deployed in a custom VPC
-3. Jenkins CI/CD pipelines for build and deployment
-4. Kubernetes workloads secured with **RBAC**
-5. **Kyverno** policies enforce governance rules
-6. **NetworkPolicies** enforce zero-trust communication
-7. **Prometheus & Grafana** provide monitoring and observability
-
-This mirrors how real production platforms are delivered to clients.
+- Provision **production-ready Kubernetes infrastructure** using Infrastructure as Code
+- Implement **secure and scalable CI/CD pipelines**
+- Enforce **Kubernetes security, governance, and least privilege**
+- Apply **zero-trust networking principles**
+- Ensure **full observability and resource governance**
+- Provide **clear documentation and execution proof** for handover and audits
 
 ---
 
-## 3️⃣ Technology Stack
+## 🏗️ Architecture Overview
 
-- **Cloud**: AWS (EKS, EC2, IAM, VPC, ALB, EBS)
-- **Infrastructure as Code**: Terraform (remote backend)
-- **CI/CD**: Jenkins
-- **Containerization**: Docker
-- **Orchestration**: Kubernetes
-- **Security & Governance**: Kyverno, RBAC, NetworkPolicies
-- **Monitoring**: Prometheus, Grafana
+This platform follows a **cloud-native, security-first architecture**:
 
----
+- Infrastructure is provisioned using **Terraform**
+- Kubernetes runs on **Amazon EKS**
+- CI/CD pipelines are implemented using **Jenkins**
+- Governance enforced using **Kyverno & RBAC**
+- Network isolation via **Kubernetes NetworkPolicies**
+- Monitoring via **Prometheus & Grafana**
+- Persistent storage via **EBS CSI Driver**
+- Ingress handled by **AWS ALB**
 
-## 4️⃣ Key Design Decisions
-
-- **Terraform remote backend** for safe state management
-- **EKS** for managed Kubernetes control plane
-- **Jenkins** for flexible CI/CD pipelines
-- **Kyverno** for policy-as-code enforcement
-- **Resource requests & limits** to prevent over-consumption
-- **Zero-trust networking** using NetworkPolicies
-- **Observability first** with Prometheus and Grafana
-
-These decisions align with **enterprise and client production standards**.
+> The architecture is designed to scale, remain secure, and be operable in real production environments.
 
 ---
 
-## 5️⃣ Docker Best Practices
+## 🔄 Project Flow (End-to-End)
 
-📂 `docker/`
-
-### Implemented:
-- Multi-stage Docker builds
-- Minimal final image size
-- Non-root container execution
-- Reduced attack surface
-
-This ensures **secure and efficient container images** suitable for production workloads.
+1. Terraform provisions AWS infrastructure (VPC, EKS, IAM)
+2. Terraform state is stored securely in an S3 remote backend
+3. Jenkins CI pipeline builds and pushes container images
+4. Jenkins CD pipeline deploys workloads to EKS
+5. RBAC restricts cluster access using least privilege
+6. Kyverno enforces security and reliability policies
+7. NetworkPolicies restrict pod-to-pod communication
+8. Prometheus collects cluster and workload metrics
+9. Grafana visualizes resource usage and cluster health
 
 ---
 
-## 6️⃣ Infrastructure as Code (Terraform – AWS EKS)
+## 🛠️ Technology Stack
 
-📂 `eks/`
+| Category | Tools |
+|------|------|
+| Cloud | AWS (EKS, VPC, IAM, EC2, ALB, EBS) |
+| IaC | Terraform |
+| CI/CD | Jenkins |
+| Containers | Docker |
+| Orchestration | Kubernetes |
+| Security | RBAC, Kyverno, NetworkPolicies |
+| Monitoring | Prometheus, Grafana |
 
-### Capabilities:
-- Remote backend using **Amazon S3**
-- Custom VPC and subnets
-- Amazon EKS cluster provisioning
-- IAM roles, OIDC provider, and IRSA support
+---
 
-### 📸 Screenshot: Terraform Remote Backend (S3)
+## 📁 Repository Structure
+
+```text
+.
+├── docker/                     # Dockerfiles (multi-stage, non-root)
+├── eks/                        # Terraform EKS infrastructure
+├── kubernetes/
+│   ├── k8s-manifests/          # Deployments, Services, StatefulSets
+│   └── rbac/                   # ServiceAccount, Role, RoleBinding
+├── kyverno-policies/           # Kubernetes policy enforcement
+├── network-policies/           # Zero-trust networking rules
+├── jenkins/                    # CI/CD pipeline definitions
+├── monitoring/                 # Prometheus & Grafana configs
+├── screenshots/                # Execution proof
+└── README.md
+```
+
+# 📸 Infrastructure, CI/CD & Observability – Execution Proof
+
+This section provides **visual and contextual proof** of real infrastructure provisioning, Kubernetes operations, CI/CD automation, and observability.  
+All screenshots are taken from a **real AWS EKS environment**, provisioned and operated using **Infrastructure as Code and production best practices**.
+
+---
+
+## 1️⃣ Terraform Remote Backend (State Management)
+
+![Terraform Remote Backend - S3 State](screenshots/aws-terraform/terraform-backend.png)
+
+### 🖼️ Terraform Remote Backend – Centralized State & Locking (S3)
 **Description:**  
-Shows Terraform storing the `terraform.tfstate` file in an S3 bucket with locking enabled.  
-This enables **safe collaboration, state consistency, and auditability**, which is essential for client projects.
+This screenshot shows **Terraform configured with a remote backend using Amazon S3**, where the `terraform.tfstate` file and the associated state lock file are securely stored.
 
-![Terraform Backend](screenshots/aws-terraform/terraform-backend.png)
+Instead of keeping state locally, the infrastructure state is **centralized and managed remotely**, enabling safe collaboration and reliable infrastructure changes across environments.
+
+**What this confirms:**
+- Terraform state is stored in **Amazon S3**, not on a local machine
+- **State locking** is enabled to prevent concurrent or conflicting Terraform runs
+- Infrastructure changes are **tracked, versioned, and auditable**
+- Multiple engineers can safely work on the same infrastructure
+
+**Why this matters in production & client environments:**
+- Prevents **state corruption** during parallel deployments
+- Enables **team-based infrastructure management**
+- Supports **CI/CD-driven Terraform executions**
+- Aligns with **enterprise Infrastructure as Code best practices**
 
 ---
 
-### 📸 Screenshot: VPC and Subnet Configuration
+## 2️⃣ Terraform Apply – EKS Infrastructure Provisioning
+
+![Terraform Apply - EKS Infrastructure Provisioning](screenshots/aws-terraform/terraform-apply.png)
+
+### 🖼️ Terraform Apply – Automated EKS Infrastructure Provisioning
 **Description:**  
-Displays the custom VPC and multiple subnets created for the EKS cluster across Availability Zones, ensuring **high availability and fault tolerance**.
+This screenshot captures a **successful `terraform apply` execution**, where the complete Amazon EKS infrastructure is provisioned using **Infrastructure as Code (IaC)**.
 
-![VPC](screenshots/aws-terraform/vpc-subnets.png)
+**What this confirms:**
+- Amazon **EKS cluster** creation
+- **VPC, subnets, and networking components** provisioned automatically
+- **IAM roles, access policies, and OIDC provider** configured
+- Remote backend usage with **state locking enabled**
+- Infrastructure created with **zero manual console configuration**
+
+**Why this matters in production:**
+- Ensures **repeatable and predictable deployments**
+- Eliminates configuration drift
+- Enables safe rollbacks and controlled changes
+- Supports long-term platform scalability
 
 ---
 
-### 📸 Screenshot: Amazon EKS Cluster Status
+## 3️⃣ AWS VPC – Network Foundation for EKS
+
+![AWS VPC for EKS Cluster](screenshots/aws-terraform/vpc-eks.png)
+
+### 🖼️ AWS VPC – Network Foundation for EKS Cluster
 **Description:**  
-Shows the active EKS cluster provisioned via Terraform, confirming successful **Infrastructure as Code execution**.
+This screenshot shows the **custom Amazon VPC** created specifically to host the Amazon EKS cluster.  
+The VPC was **fully provisioned using Terraform**, ensuring a reproducible and secure network setup.
 
-![EKS Cluster](screenshots/aws-terraform/eks-cluster.png)
+**What this confirms:**
+- Dedicated VPC with controlled **CIDR range**
+- Subnets distributed across **multiple Availability Zones**
+- Centralized routing configuration
+- Network isolation from other environments
+
+**Why this matters in production:**
+- Provides **secure network isolation**
+- Enables **high availability and fault tolerance**
+- Supports load balancers, node groups, and pod networking
+- Aligns with AWS Well-Architected networking principles
 
 ---
 
-### 📸 Screenshot: Terraform Apply Output
+## 4️⃣ Amazon EKS – Kubernetes Control Plane Status
+
+![Amazon EKS Cluster Status](screenshots/aws-terraform/eks-cluster-status.png)
+
+### 🖼️ Amazon EKS Cluster – Production-Ready Control Plane (ACTIVE)
 **Description:**  
-Demonstrates a successful Terraform apply, validating **repeatable and production-safe infrastructure provisioning**.
+This screenshot shows the **Amazon EKS cluster in an ACTIVE state**, confirming that the Kubernetes control plane is fully operational.
 
-![Terraform Apply](screenshots/aws-terraform/terraform-apply.png)
+**What this confirms:**
+- Control plane managed and monitored by AWS
+- Supported Kubernetes version in use
+- High availability and fault tolerance handled by AWS
+- Cluster ready for workloads and CI/CD deployments
 
----
-
-## 7️⃣ Kubernetes Manifests & RBAC
-
-📂 `kubernetes/`
-
-### Kubernetes Manifests
-📂 `kubernetes/k8s-manifests/`
-- Deployments
-- Services
-- StatefulSets
-
-### RBAC
-📂 `kubernetes/rbac/`
-- ServiceAccounts
-- Roles
-- RoleBindings
-
-RBAC is implemented using **least-privilege access**, which is mandatory in production clusters.
+**Why this matters in production:**
+- Eliminates manual control-plane management
+- Enables consistent environments (dev/stage/prod)
+- Forms the backbone for CI/CD, security, and monitoring
 
 ---
 
-## 8️⃣ Kubernetes Security & Governance (Kyverno)
+## 5️⃣ Prometheus – Cluster Metrics Collection
 
-📂 `kyverno-policies/`
+![Prometheus Targets - kube-state-metrics and node-exporter](screenshots/prometheus/prometheus-targets-core.png)
 
-### Policies Enforced:
-1. Docker images must not use the `latest` tag
-2. Minimum replicas ≥ 2 for high availability
-3. CPU and memory requests & limits are mandatory
-4. StatefulSets must define `volumeClaimTemplates`
-
-### 📸 Screenshot: Kyverno Policy Enforcement
+### 🖼️ Prometheus Targets – Cluster State & Node-Level Metrics
 **Description:**  
-Shows Kyverno validating and enforcing policies before workloads are admitted into the cluster.  
-This prevents misconfigurations and enforces **platform-level governance**.
+This screenshot shows Prometheus successfully scraping metrics from **kube-state-metrics and node-exporter**, with all targets in an **UP state**.
 
-![Kyverno](screenshots/kubernetes-security/kyverno-policy.png)
+**What this confirms:**
+- Kubernetes object state metrics are available
+- Node-level CPU, memory, disk, and network metrics collected
+- Service discovery via Kubernetes labels is working
+
+**Why this matters in production:**
+- Enables detection of replica mismatches and failed pods
+- Supports capacity planning and scaling
+- Forms the foundation for alerting and dashboards
 
 ---
 
-## 9️⃣ Network Security (Zero-Trust Model)
+## 6️⃣ Prometheus – Pod & Container-Level Metrics
 
-📂 `network-policies/`
+![Prometheus Targets - kubelet and cAdvisor](screenshots/prometheus/prometheus-targets-kubelet.png)
 
-### Network Rules:
-- Default deny-all policy
-- Frontend → Backend allowed
-- Backend → Database allowed
-- Frontend → Database blocked
-
-This enforces **strict service-to-service communication** and follows a **zero-trust security model**.
-
-### 📸 Screenshot: NetworkPolicy Enforcement
+### 🖼️ Prometheus Targets – Pod & Container Resource Metrics
 **Description:**  
-Illustrates controlled pod-to-pod communication, ensuring frontend services cannot directly access the database.
+This screenshot shows Prometheus scraping **kubelet, cAdvisor, and probe endpoints** across all nodes.
 
-![NetworkPolicy](screenshots/kubernetes-security/network-policy.png)
+**What this confirms:**
+- Pod- and container-level CPU and memory metrics collected
+- Health probe metrics available
+- End-to-end observability from node → pod → container
+
+**Why this matters in production:**
+- Detects memory leaks and CPU spikes
+- Validates resource requests & limits
+- Supports incident response and SRE operations
 
 ---
 
-## 🔟 CI/CD Pipelines (Jenkins)
+## 7️⃣ Grafana – Node & Pod Resource Utilization
 
-📂 `jenkins/`
+![Grafana - Node and Pod Resource Utilization](screenshots/grafana/node-pod-resources.png)
 
-### CI Pipeline Responsibilities:
-- Source code checkout
-- Docker image build
-- Image tagging and push
-
-### CD Pipeline Responsibilities:
-- Kubernetes manifest validation
-- Deployment to EKS
-- Controlled rollout strategy
-
-### 📸 Screenshot: Jenkins CI Pipeline
+### 🖼️ Grafana Dashboard – Node & Pod Resource Utilization
 **Description:**  
-Shows a successful Jenkins CI pipeline execution performing image build and push operations.
+This dashboard visualizes **real-time CPU and memory usage** across Kubernetes nodes and pods using Prometheus metrics.
 
-![Jenkins CI](screenshots/jenkins/ci-pipeline.png)
+**What this confirms:**
+- Metrics are correctly visualized in Grafana
+- Resource requests and limits are enforced
+- Workload behavior can be monitored over time
+
+**Why this matters in production:**
+- Prevents noisy-neighbor issues
+- Enables proactive capacity planning
+- Ensures workload stability and performance
 
 ---
 
-### 📸 Screenshot: Jenkins CD Pipeline
+## 8️⃣ Grafana – Cluster Resource Overview
+
+![Grafana - Cluster Resource Overview](screenshots/grafana/cluster-resources.png)
+
+### 🖼️ Grafana Dashboard – Cluster Resource Overview
 **Description:**  
-Displays the Jenkins CD pipeline deploying applications into the EKS cluster in an automated and repeatable manner.
+This dashboard provides a **cluster-wide summary** of CPU and memory utilization, resource commitments, and namespace-level usage.
 
-![Jenkins CD](screenshots/jenkins/cd-pipeline.png)
+**What this confirms:**
+- Cluster health is continuously monitored
+- Resource over-commitment risks are visible
+- Namespace-level usage is tracked
 
----
-
-## 1️⃣1️⃣ Ingress & Storage Integration
-
-### Implemented:
-- **AWS ALB Ingress Controller** for external traffic
-- **EBS CSI Driver** for dynamic volume provisioning
-- Persistent storage for StatefulSets
-
-This setup supports **stateful production workloads**.
+**Why this matters in production:**
+- Enables cost optimization and right-sizing
+- Prevents resource exhaustion
+- Supports scaling and capacity decisions
+- Used by platform and SRE teams for reliability
 
 ---
+## 9️⃣ Kubernetes RBAC – Access Control & Least Privilege
 
-## 1️⃣2️⃣ Monitoring & Observability
+![Kubernetes RBAC - ServiceAccount, Role and RoleBinding](screenshots/kubernetes-security/rbac-jenkins.png)
 
-📂 `monitoring/`
-
-### Prometheus
-- Node Exporter
-- kube-state-metrics
-- ServiceMonitors
-
-### Grafana
-- Cluster dashboards
-- Node-level metrics
-- Pod-level resource usage
-
----
-
-### 📸 Screenshot: Prometheus Targets
+### 🖼️ Kubernetes RBAC – ServiceAccount, Role & RoleBinding Configuration
 **Description:**  
-Shows Prometheus targets in an **UP state**, confirming successful metric scraping from Kubernetes components.
+This screenshot shows the **Kubernetes Role-Based Access Control (RBAC)** configuration applied for Jenkins within the cluster, including **ServiceAccounts, Roles, and RoleBindings**.
 
-![Prometheus](screenshots/prometheus/targets.png)
+The commands executed validate that RBAC resources were successfully created and associated within the target namespace, ensuring Jenkins operates with **explicitly defined permissions**.
 
----
+**What this confirms:**
+- A **dedicated ServiceAccount** is created for Jenkins workloads
+- A namespace-scoped **Role** defines exactly what actions Jenkins can perform
+- A **RoleBinding** securely associates the Role with the ServiceAccount
+- Permissions follow the **principle of least privilege**
+- RBAC resources are verified using `kubectl get sa,role,rolebinding`
 
-### 📸 Screenshot: Grafana Node Dashboard
-**Description:**  
-Displays CPU and memory utilization across cluster nodes, enabling **capacity planning and performance analysis**.
+**Why this matters in production:**
+- Prevents over-privileged workloads and accidental cluster-wide access
+- Reduces blast radius in case of credential compromise
+- Enables secure CI/CD interactions with the Kubernetes API
+- Meets **security and compliance requirements** in enterprise environments
+- Avoids using the default ServiceAccount for sensitive operations
 
-![Grafana Nodes](screenshots/grafana/node-dashboard.png)
-
----
-
-### 📸 Screenshot: Grafana Pod Resource Usage
-**Description:**  
-Shows per-pod CPU and memory usage, validating enforcement of Kubernetes **resource requests and limits**.
-
-![Grafana Pods](screenshots/grafana/pod-usage.png)
-
----
-
-## 1️⃣3️⃣ Screenshots & Execution Proof
-
-📂 `screenshots/`
-
-This folder contains categorized screenshots for:
-- AWS & Terraform
-- Jenkins CI/CD
-- Prometheus
-- Grafana
-
-All screenshots are captured from a **real AWS EKS environment**, not simulated data.
+This RBAC setup demonstrates **security-first Kubernetes operations**, where CI/CD systems like Jenkins are granted **only the permissions they need**, a standard practice in **freelance and enterprise DevOps platforms**.
 
 ---
 
-## 1️⃣4️⃣ Freelancing Experience Justification
 
-This project reflects how I deliver **end-to-end DevOps platforms** for freelance clients:
-- Infrastructure ownership
-- Secure CI/CD pipelines
-- Kubernetes governance and policy enforcement
-- Zero-trust networking
-- Full monitoring and observability
+## ✅ Summary
 
-This repository represents **3+ years of hands-on freelancing experience** condensed into a single, production-accurate project.
+These screenshots collectively demonstrate:
+- Infrastructure provisioning via **Terraform**
+- Secure and scalable networking
+- Production-ready **Amazon EKS**
+- Deep Kubernetes observability
+- Operational maturity and ownership
 
----
-
-## 1️⃣5️⃣ Key Learnings & Challenges
-
-- Designing secure Kubernetes platforms
-- Enforcing governance at scale
-- Balancing resource efficiency and availability
-- Operating production-ready EKS clusters
-
----
-
-## 1️⃣6️⃣ Future Enhancements
-
-- Horizontal Pod Autoscaler (HPA)
-- GitOps with ArgoCD
-- Secrets management with AWS Secrets Manager
-- Cost optimization dashboards
-
----
-
-## 1️⃣7️⃣ License
-
-MIT License
-
----
-
-## 1️⃣8️⃣ Contact
-
-For discussions around architecture, freelancing delivery models, or DevOps consulting, feel free to connect.
+This level of documentation reflects **real-world freelance and enterprise DevOps delivery**, not a tutorial or demo setup.
