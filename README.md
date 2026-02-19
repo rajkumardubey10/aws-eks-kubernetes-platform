@@ -90,7 +90,7 @@ All screenshots are taken from a **real AWS EKS environment**, provisioned and o
 
 ## 1️⃣ Terraform Remote Backend (State Management)
 
-![Terraform Remote Backend - S3 State](screenshots/aws-terraform/terraform-backend.png)
+<img width="1366" height="768" alt="S3-remote-backend-screenshot" src="https://github.com/user-attachments/assets/0064b252-e5f2-4e63-a133-e9655225ce48" />
 
 ### 🖼️ Terraform Remote Backend – Centralized State & Locking (S3)
 **Description:**  
@@ -114,7 +114,7 @@ Instead of keeping state locally, the infrastructure state is **centralized and 
 
 ## 2️⃣ Terraform Apply – EKS Infrastructure Provisioning
 
-![Terraform Apply - EKS Infrastructure Provisioning](screenshots/aws-terraform/terraform-apply.png)
+<img width="1366" height="768" alt="EKS-Cluster_Terraform_setup" src="https://github.com/user-attachments/assets/8025bfe2-1d95-427c-bb13-fa78ab482036" />
 
 ### 🖼️ Terraform Apply – Automated EKS Infrastructure Provisioning
 **Description:**  
@@ -137,7 +137,8 @@ This screenshot captures a **successful `terraform apply` execution**, where the
 
 ## 3️⃣ AWS VPC – Network Foundation for EKS
 
-![AWS VPC for EKS Cluster](screenshots/aws-terraform/vpc-eks.png)
+<img width="1366" height="768" alt="EKS-VPC-screeshot" src="https://github.com/user-attachments/assets/e24d80bf-ddde-4a29-b345-f74e4f1ebdb3" />
+
 
 ### 🖼️ AWS VPC – Network Foundation for EKS Cluster
 **Description:**  
@@ -160,7 +161,7 @@ The VPC was **fully provisioned using Terraform**, ensuring a reproducible and s
 
 ## 4️⃣ Amazon EKS – Kubernetes Control Plane Status
 
-![Amazon EKS Cluster Status](screenshots/aws-terraform/eks-cluster-status.png)
+<img width="1366" height="768" alt="EKS-Cluster-screenshot" src="https://github.com/user-attachments/assets/b4f9c53d-fc46-43fd-8323-a9e32a0813c3" />
 
 ### 🖼️ Amazon EKS Cluster – Production-Ready Control Plane (ACTIVE)
 **Description:**  
@@ -181,7 +182,7 @@ This screenshot shows the **Amazon EKS cluster in an ACTIVE state**, confirming 
 
 ## 5️⃣ Prometheus – Cluster Metrics Collection
 
-![Prometheus Targets - kube-state-metrics and node-exporter](screenshots/prometheus/prometheus-targets-core.png)
+<img width="1366" height="768" alt="prometheus-screenshot-node-metric" src="https://github.com/user-attachments/assets/c2fb2622-bf9b-4eb3-8c98-effafeebeeb3" />
 
 ### 🖼️ Prometheus Targets – Cluster State & Node-Level Metrics
 **Description:**  
@@ -201,7 +202,8 @@ This screenshot shows Prometheus successfully scraping metrics from **kube-state
 
 ## 6️⃣ Prometheus – Pod & Container-Level Metrics
 
-![Prometheus Targets - kubelet and cAdvisor](screenshots/prometheus/prometheus-targets-kubelet.png)
+<img width="1366" height="768" alt="prometheus-screenshot-kubelet" src="https://github.com/user-attachments/assets/5cd8f09d-48fc-4c94-a80f-76b99a427a85" />
+
 
 ### 🖼️ Prometheus Targets – Pod & Container Resource Metrics
 **Description:**  
@@ -221,7 +223,7 @@ This screenshot shows Prometheus scraping **kubelet, cAdvisor, and probe endpoin
 
 ## 7️⃣ Grafana – Node & Pod Resource Utilization
 
-![Grafana - Node and Pod Resource Utilization](screenshots/grafana/node-pod-resources.png)
+<img width="1100" height="645" alt="graffan-node-metrics" src="https://github.com/user-attachments/assets/28c12acf-672f-4658-9827-c3abf8c62799" />
 
 ### 🖼️ Grafana Dashboard – Node & Pod Resource Utilization
 **Description:**  
@@ -241,7 +243,7 @@ This dashboard visualizes **real-time CPU and memory usage** across Kubernetes n
 
 ## 8️⃣ Grafana – Cluster Resource Overview
 
-![Grafana - Cluster Resource Overview](screenshots/grafana/cluster-resources.png)
+<img width="1094" height="715" alt="graffan-cluster-metrics" src="https://github.com/user-attachments/assets/0d15cb76-34e4-4ed4-812f-a6bddffda8b9" />
 
 ### 🖼️ Grafana Dashboard – Cluster Resource Overview
 **Description:**  
@@ -261,7 +263,7 @@ This dashboard provides a **cluster-wide summary** of CPU and memory utilization
 ---
 ## 9️⃣ Kubernetes RBAC – Access Control & Least Privilege
 
-![Kubernetes RBAC - ServiceAccount, Role and RoleBinding](screenshots/kubernetes-security/rbac-jenkins.png)
+<img width="1366" height="768" alt="RBAC-screenshot" src="https://github.com/user-attachments/assets/1aca1056-431c-4f8c-ae09-f549e45caf0e" />
 
 ### 🖼️ Kubernetes RBAC – ServiceAccount, Role & RoleBinding Configuration
 **Description:**  
