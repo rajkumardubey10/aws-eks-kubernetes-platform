@@ -1,4 +1,4 @@
-# 🚀 Production-Grade Jenkins CI/CD Platform on AWS EKS
+# 🚀 Production-Style Jenkins CI/CD Platform on AWS EKS
 
 A **real-world, production-ready DevOps platform** demonstrating end-to-end infrastructure provisioning, CI/CD automation, Kubernetes security, and observability using **AWS, Terraform, Jenkins, Kubernetes, Prometheus, and Grafana**.
 
