@@ -36,7 +36,7 @@ This platform follows a **cloud-native, security-first architecture**:
 
 ---
 
-## 🔄 Project Flow (End-to-End)
+## 🔄 Project Flow (End-to-End) 
 
 1. Terraform provisions AWS infrastructure (VPC, EKS, IAM)
 2. Terraform state is stored securely in an S3 remote backend
