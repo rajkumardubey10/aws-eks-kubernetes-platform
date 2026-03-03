@@ -6,7 +6,8 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: jenkins-user
-  apiGroup: rbac.authorization.k8s.io
+  namespace: jenkins
+  apiGroup: ""
 roleRef:
   kind: Role
   name: jenkins-role

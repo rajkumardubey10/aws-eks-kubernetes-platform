@@ -54,14 +54,24 @@ module "eks-cluster-application" {
   endpoint_public_access = true
   enable_cluster_creator_admin_permissions = true
 
-  create_auto_mode_iam_resources = true
-  compute_config = {
-    enabled = true
-    node_pools = ["general-purpose"]
-  }
-  
+  eks_managed_node_groups = {
+      general = {
+        min_size     = 1
+        max_size     = 3
+        desired_size = 2
+
+        instance_types = ["t3.small"]
+        capacity_type  = "ON_DEMAND"
+
+        labels = {
+          nodegroup = "eks-general"
+        }
+      }
+    }
+
+      
+
   tags = {
     Terraform = "true"
   }
-
 }
