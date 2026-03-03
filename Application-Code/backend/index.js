@@ -9,9 +9,19 @@ connection();
 app.use(express.json());
 app.use(cors());
 
-app.get('/ok', (req, res) => {
-    res.status(200).send('ok')
+app.get('/healthz', (req, res) => {
+    res.status(200).send('Healthz is OK')
   })
+
+app.get('/ready', async (req, res) => {
+  try {
+    await mongoose.connection.db.admin().ping();
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).send("DB not ready");
+  }
+});
+
 
 app.use("/api/tasks", tasks);
 

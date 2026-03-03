@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  backend-deployment
+  labels:
+    name:  backend
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0 
+  template:
+    metadata:
+      labels:
+        name:  backend
+    spec:
+      containers:
+      - image: rajkumardockerhub/node-multi-stage:v1
+        name:  backend-app-image
+
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+          limits: 
+             cpu: "300m"
+             memory: "512Mi"
+
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 3500
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          failureThreshold: 3
+
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 3500
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          failureThreshold: 3
+
+        env:
+        - name:  ENVVARNAME
+          value:  ENVVARVALUE  
+
+        ports:
+        - containerPort:  3500
+          name:  backend-port
+
+        restartPolicy: Always
+        imagePullPolicy: IfNotPresent
