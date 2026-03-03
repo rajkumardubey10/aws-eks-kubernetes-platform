@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name:  frontend-service
+  namespace: three-tier
 spec:
   selector:
     app:  frontend

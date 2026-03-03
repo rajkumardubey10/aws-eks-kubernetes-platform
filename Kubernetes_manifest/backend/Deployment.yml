@@ -2,9 +2,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name:  backend-deployment
+  namespace: three-tier
   labels:
     name:  backend
 spec:
+  replicas: 3
+  
+  selector:
+    matchLabels:
+      name : backend
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -16,8 +22,13 @@ spec:
         name:  backend
     spec:
       containers:
-      - image: rajkumardockerhub/node-multi-stage:v1
+      - image: rajkumardockerhub/backend-test-app:v1
         name:  backend-app-image
+        imagePullPolicy: IfNotPresent
+
+        ports:
+        - containerPort:  3500
+          name:  backend-port
 
         resources:
           requests:
@@ -44,12 +55,20 @@ spec:
           failureThreshold: 3
 
         env:
-        - name:  ENVVARNAME
-          value:  ENVVARVALUE  
+        - name:  MONGO_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name : mongo-secret
+              key : username 
 
-        ports:
-        - containerPort:  3500
-          name:  backend-port
+        - name:  MONGO_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name : mongo-secret
+              key : password 
+        
+        - name:  MONGO_URI
+          key : mongodb://$(MONGO_USERNAME):$(MONGO_PASSWORD)@mongodb-service:27017/todo?authSource=admin
 
-        restartPolicy: Always
-        imagePullPolicy: IfNotPresent
+        
+

@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  mongo-service 
+  namespace: three-tier
+spec:
+  ClusterIP:  None
+  selector:
+    app:  mongodb
+  ports:
+  - name:  db-port
+    port:  27017
+    targetPort:  27017
