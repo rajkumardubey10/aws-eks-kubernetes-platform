@@ -22,7 +22,7 @@ spec:
         ports:
         - containerPort:  27017
           name:  mongodb-port
-          imagePullPolicy: IfNotPresent
+        imagePullPolicy: IfNotPresent
 
         env:
         - name:  MONGO_INITDB_ROOT_USERNAME
@@ -68,13 +68,13 @@ spec:
           - name:  mongo-data
             mountPath:  /data/db
 
-volumeClaimTemplates: 
-  - metadata:
-      name: mongo-data
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      resources:
-        requests:
-          storage: 5Gi
-      storageClassName : mongo-gp3
+  volumeClaimTemplates: 
+    - metadata:
+        name: mongo-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi
+        storageClassName : mongo-gp3

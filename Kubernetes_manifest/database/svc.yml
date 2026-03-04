@@ -4,7 +4,7 @@ metadata:
   name:  mongo-service 
   namespace: three-tier
 spec:
-  ClusterIP:  None
+  clusterIP:  None
   selector:
     app:  mongodb
   ports:
