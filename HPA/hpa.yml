@@ -8,7 +8,7 @@ spec:
     kind: Deployment
     name: backend-deployment
   minReplicas: 2
-  maxReplicas: 
+  maxReplicas: 8
   
   behavior:
   scaleUp:
