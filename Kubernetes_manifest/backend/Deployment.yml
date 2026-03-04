@@ -21,6 +21,13 @@ spec:
       labels:
         name:  backend
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                name : backend
+            topologyKey: "kubernetes.io/hostname"
       containers:
       - image: rajkumardockerhub/backend-test-app:v1
         name:  backend-app-image
