@@ -23,7 +23,7 @@ spec:
     spec:
       affinity:
         podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
+          preferredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchLabels:
                 name : backend
@@ -75,7 +75,7 @@ spec:
               key : password 
         
         - name:  MONGO_URI
-          key : mongodb://$(MONGO_USERNAME):$(MONGO_PASSWORD)@mongodb-service:27017/todo?authSource=admin
+          key : mongodb://$(MONGO_USERNAME):$(MONGO_PASSWORD)@mongo-service:27017/todo?authSource=admin
 
         
 
