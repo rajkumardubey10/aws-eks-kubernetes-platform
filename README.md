@@ -1,6 +1,6 @@
-# 🚀 Production-Style Jenkins CI/CD Platform on AWS EKS
+# 🚀  Production-Oriented Kubernetes Platform on AWS EKS with Terraform, Ansible & Observability
 
-A **real-world, production-ready DevOps platform** demonstrating end-to-end infrastructure provisioning, CI/CD automation, Kubernetes security, and observability using **AWS, Terraform, Jenkins, Kubernetes, Prometheus, and Grafana**.
+A **real-world, production-ready DevOps platform** demonstrating end-to-end infrastructure provisioning, automated server configuration, Kubernetes security, and observability using AWS, Terraform, Ansible, Kubernetes, Prometheus, and Grafana.
 
 This project is designed and documented in a **freelancing delivery style**, reflecting how enterprise and startup clients expect DevOps platforms to be built, secured, and operated.
 
@@ -11,7 +11,7 @@ This project is designed and documented in a **freelancing delivery style**, ref
 The primary objectives of this project are:
 
 - Provision **production-ready Kubernetes infrastructure** using Infrastructure as Code
-- Implement **secure and scalable CI/CD pipelines**
+- Automate server configuration and DevOps tooling using **Ansible playbooks**
 - Enforce **Kubernetes security, governance, and least privilege**
 - Apply **zero-trust networking principles**
 - Ensure **full observability and resource governance**
@@ -21,16 +21,16 @@ The primary objectives of this project are:
 
 ## 🏗️ Architecture Overview
 
-This platform follows a **cloud-native, security-first architecture**:
+This platform follows a cloud-native, security-first architecture:
 
-- Infrastructure is provisioned using **Terraform**
-- Kubernetes runs on **Amazon EKS**
-- CI/CD pipelines are implemented using **Jenkins**
-- Governance enforced using **Kyverno & RBAC**
-- Network isolation via **Kubernetes NetworkPolicies**
-- Monitoring via **Prometheus & Grafana**
-- Persistent storage via **EBS CSI Driver**
-- Ingress handled by **AWS ALB**
+- Infrastructure is provisioned using Terraform
+- Kubernetes runs on Amazon EKS
+- Server configuration and DevOps tools installation automated using Ansible
+- Governance enforced using Kyverno & RBAC
+- Network isolation via Kubernetes NetworkPolicies
+- Monitoring via Prometheus & Grafana
+- Persistent storage via EBS CSI Driver
+- Ingress handled by AWS ALB
 
 > The architecture is designed to scale, remain secure, and be operable in real production environments.
 
@@ -40,13 +40,14 @@ This platform follows a **cloud-native, security-first architecture**:
 
 1. Terraform provisions AWS infrastructure (VPC, EKS, IAM)
 2. Terraform state is stored securely in an S3 remote backend
-3. Jenkins CI pipeline builds and pushes container images
-4. Jenkins CD pipeline deploys workloads to EKS
-5. RBAC restricts cluster access using least privilege
-6. Kyverno enforces security and reliability policies
-7. NetworkPolicies restrict pod-to-pod communication
-8. Prometheus collects cluster and workload metrics
-9. Grafana visualizes resource usage and cluster health
+3. EC2 instances are provisioned for platform operations
+4. Ansible playbooks automatically configure servers
+5. DevOps tools and system dependencies are installed via Ansible
+6. RBAC restricts cluster access using least privilege
+7. Kyverno enforces Kubernetes security and reliability policies
+8. NetworkPolicies restrict pod-to-pod communication
+9. Prometheus collects cluster and workload metrics
+10. Grafana visualizes resource usage and cluster health
 
 ---
 
@@ -56,12 +57,11 @@ This platform follows a **cloud-native, security-first architecture**:
 |------|------|
 | Cloud | AWS (EKS, VPC, IAM, EC2, ALB, EBS) |
 | IaC | Terraform |
-| CI/CD | Jenkins |
+| Server Automation | Ansible |
 | Containers | Docker |
 | Orchestration | Kubernetes |
 | Security | RBAC, Kyverno, NetworkPolicies |
 | Monitoring | Prometheus, Grafana |
-
 ---
 
 ## 📁 Repository Structure
@@ -75,15 +75,14 @@ This platform follows a **cloud-native, security-first architecture**:
 │   └── rbac/                   # ServiceAccount, Role, RoleBinding
 ├── kyverno-policies/           # Kubernetes policy enforcement
 ├── network-policies/           # Zero-trust networking rules
-├── jenkins/                    # CI/CD pipeline definitions
 ├── monitoring/                 # Prometheus & Grafana configs
 ├── screenshots/                # Execution proof
 └── README.md
 ```
 
-# 📸 Infrastructure, CI/CD & Observability – Execution Proof
+# 📸 Infrastructure, Kubernetes operations & Observability – Execution Proof
 
-This section provides **visual and contextual proof** of real infrastructure provisioning, Kubernetes operations, CI/CD automation, and observability.  
+This section provides **visual and contextual proof** of real infrastructure provisioning, Kubernetes operations, server automation, and observability.  
 All screenshots are taken from a **real AWS EKS environment**, provisioned and operated using **Infrastructure as Code and production best practices**.
 
 ---
@@ -107,7 +106,6 @@ Instead of keeping state locally, the infrastructure state is **centralized and 
 **Why this matters in production & client environments:**
 - Prevents **state corruption** during parallel deployments
 - Enables **team-based infrastructure management**
-- Supports **CI/CD-driven Terraform executions**
 - Aligns with **enterprise Infrastructure as Code best practices**
 
 ---
@@ -267,12 +265,12 @@ This dashboard provides a **cluster-wide summary** of CPU and memory utilization
 
 ### 🖼️ Kubernetes RBAC – ServiceAccount, Role & RoleBinding Configuration
 **Description:**  
-This screenshot shows the **Kubernetes Role-Based Access Control (RBAC)** configuration applied for Jenkins within the cluster, including **ServiceAccounts, Roles, and RoleBindings**.
+This screenshot shows the **Kubernetes Role-Based Access Control (RBAC)** configuration applied for developer within the cluster, including **ServiceAccounts, Roles, and RoleBindings**.
 
 The commands executed validate that RBAC resources were successfully created and associated within the target namespace, ensuring Jenkins operates with **explicitly defined permissions**.
 
 **What this confirms:**
-- A **dedicated ServiceAccount** is created for Jenkins workloads
+- A **dedicated ServiceAccount** is created for developer access 
 - A namespace-scoped **Role** defines exactly what actions Jenkins can perform
 - A **RoleBinding** securely associates the Role with the ServiceAccount
 - Permissions follow the **principle of least privilege**
@@ -285,18 +283,8 @@ The commands executed validate that RBAC resources were successfully created and
 - Meets **security and compliance requirements** in enterprise environments
 - Avoids using the default ServiceAccount for sensitive operations
 
-This RBAC setup demonstrates **security-first Kubernetes operations**, where CI/CD systems like Jenkins are granted **only the permissions they need**, a standard practice in **freelance and enterprise DevOps platforms**.
-
----
+This RBAC setup demonstrates **security-first Kubernetes operations**, where developers and platform users are granted only the permissions they need, a standard practice in **freelance and enterprise DevOps platforms**.
 
 
-## ✅ Summary
 
-These screenshots collectively demonstrate:
-- Infrastructure provisioning via **Terraform**
-- Secure and scalable networking
-- Production-ready **Amazon EKS**
-- Deep Kubernetes observability
-- Operational maturity and ownership
 
-This level of documentation reflects **real-world freelance and enterprise DevOps delivery**, not a tutorial or demo setup.
