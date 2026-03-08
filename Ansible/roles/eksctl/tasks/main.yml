@@ -1,0 +1,4 @@
+- name: Install eksctl
+  shell: |
+    curl -sL https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz | tar xz -C /tmp
+    mv /tmp/eksctl /usr/local/bin

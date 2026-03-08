@@ -1,0 +1,14 @@
+- name: Install Docker
+  shell: curl -fsSL https://get.docker.com | bash
+
+- name: Enable Docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Add ubuntu user to docker group
+  user:
+    name: ubuntu
+    groups: docker
+    append: yes

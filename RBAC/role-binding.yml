@@ -1,14 +1,14 @@
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: service-user-rolebinding
-  namespace: jenkins
+  name: dev-user-rolebinding
+  namespace: three-tier
 subjects:
 - kind: ServiceAccount
-  name: jenkins-user
-  namespace: jenkins
-  apiGroup: ""
+  name: dev-user
+  namespace: three-tier
+  apiGroup: rbac.authorization.k8s.io/v1
 roleRef:
   kind: Role
-  name: jenkins-role
+  name: dev-role
   apiGroup: rbac.authorization.k8s.io

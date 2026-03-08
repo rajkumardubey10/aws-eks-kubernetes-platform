@@ -1,0 +1,14 @@
+---
+- name: Configure DevOps EC2 Server
+  hosts: devops_servers
+  become: true
+
+  roles:
+    - base
+    - docker
+    - awscli
+    - terraform
+    - kubectl
+    - eksctl
+    - helm
+    - terminal-tools

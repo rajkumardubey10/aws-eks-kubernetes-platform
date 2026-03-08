@@ -1,0 +1,26 @@
+- name: Install ncdu
+  apt:
+    name: ncdu
+    state: present
+
+- name: Install ranger
+  apt:
+    name: ranger
+    state: present
+
+- name: Install fzf
+  git:
+    repo: https://github.com/junegunn/fzf.git
+    dest: /opt/fzf
+    depth: 1
+
+- name: Install fzf binary
+  shell: /opt/fzf/install --all
+
+- name: Install lazydocker
+  shell: |
+    curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash
+
+- name: Install lazygit
+  shell: |
+    curl -s https://raw.githubusercontent.com/jesseduffield/lazygit/master/scripts/install.sh | bash
