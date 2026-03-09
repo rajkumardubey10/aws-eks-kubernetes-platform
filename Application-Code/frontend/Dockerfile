@@ -1,27 +1,33 @@
-FROM node:16 AS builder
+# --------------------------- stage 1 : building stage ------------------------
+FROM node:18 AS builder
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci
 
 COPY . .
 
-## stage 2 
-FROM  node:16-alpine
+# Build artifacts
+RUN npm run build
+
+## ------------------------ stage 2 : runtime stage -------------------------------------------
+FROM  nginx:alpine
 
 ## creating non-root  user
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
-WORKDIR /app
+RUN rm -rf /usr/share/nginx/html/*
 
-COPY --from=builder /app /
+COPY --from=builder /app/build  /usr/share/nginx/html
 
-RUN chown -R appuser:appgroup /app /node_modules
+# Changing the OWner
+RUN chown -R appuser:appgroup /usr/share/nginx/html
 
+# switching the user
 USER appuser
 
-EXPOSE 3000
+EXPOSE 80
 
-CMD [ "npm", "start" ]
+CMD [ "nginx", "-g", "daemon off;"]
