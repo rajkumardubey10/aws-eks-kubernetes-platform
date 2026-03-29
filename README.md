@@ -1,4 +1,4 @@
-# 🚀 AWS EKS Kubernetes Platform: Networking, Security Governance & Deployment Automation
+# 🚀 AWS EKS Kubernetes Platform: Networking, Security Governance & Deployment Automation 
 
 A **real-world, production-ready DevOps platform** demonstrating end-to-end infrastructure provisioning, automated server configuration, Kubernetes security, and observability using AWS, Terraform, Ansible, Kubernetes, Prometheus, and Grafana.
 
